@@ -1,20 +1,20 @@
 ---
-name: Chat
-description: Answer a question (with chat history) using solely text sources.
+name: Reinsurance Claims Chat
+description: Answer questions about a reinsurance claim (with chat history) using solely internal text sources like claim files, broker emails, and treaty documents.
 model:
-    api: chat
+  api: chat
 sample:
-    user_query: What does a product manager do that a CEO doesn't?
-    include_follow_up_questions: true
-    past_messages:
-        - role: user
-          content: "What does a CEO do?"
-        - role: assistant
-          content: "A CEO, or Chief Executive Officer, is responsible for providing strategic direction and oversight to a company to ensure its long-term success and profitability. They develop and implement strategies and objectives for financial success and growth, provide guidance to the executive team, manage day-to-day operations, ensure compliance with laws and regulations, develop and maintain relationships with stakeholders, monitor industry trends, and represent the company in public events 12. [role_library.pdf#page=1][role_library.pdf#page=3]"
-    text_sources:
-        - "role_library.pdf#page=29:  The Manager of Product Management will collaborate with internal teams, such as engineering, sales, marketing, and finance, as well as external partners, suppliers, and customers to ensure successful product execution. Responsibilities: · Lead the product management team and provide guidance on product strategy, design, development, and launch. · Develop and implement product life-cycle management processes. · Monitor and analyze industry trends to identify opportunities for new products. · Develop product marketing plans and go-to-market strategies. · Research customer needs and develop customer-centric product roadmaps. · Collaborate with internal teams to ensure product execution and successful launch. · Develop pricing strategies and cost models. · Oversee product portfolio and performance metrics. · Manage product development budget. · Analyze product performance and customer feedback to identify areas for improvement. Qualifications: · Bachelor's degree in business, engineering, or a related field. · At least 5 years of experience in product management. · Proven track record of successful product launches."
-        - "role_library.pdf#page=23: Company: Contoso Electronics Location: Anywhere Job Type: Full-Time Salary: Competitive, commensurate with experience Job Summary: The Senior Manager of Product Management will be responsible for leading the product management team at Contoso Electronics. This role includes developing strategies, plans and objectives for the product management team and managing the day-to-day operations. The Senior Manager of Product Management will be responsible for the successful launch of new products and the optimization of existing products. Responsibilities: · Develop and implement product management strategies, plans and objectives to maximize team performance. · Analyze competitive landscape and market trends to develop product strategies. · Lead the product management team in the development of product plans, roadmaps and launch plans. · Monitor the performance of product management team, analyze results and implement corrective action as needed. · Manage the product lifecycle, including product development, launch, and end of life. · Ensure product features and benefits meet customer requirements. · Establish and maintain relationships with key customers, partners, and vendors."
-        - "role_library.pdf#page=28:  · 7+ years of experience in research and development in the electronics sector. · Proven track record of successfully designing, testing, and optimizing products. · Experience leading a team of researchers and engineers. · Excellent problem-solving and analytical skills. · Ability to work in a fast-paced environment and meet tight deadlines.· Knowledge of industry trends, technologies, and regulations. · Excellent communication and presentation skills. Manager of Product Management Job Title: Manager of Product Management, Contoso Electronics Job Summary: The Manager of Product Management is responsible for overseeing the product management team, driving product development and marketing strategy for Contoso Electronics. This individual will be accountable for the successful launch of new products and the implementation of product life-cycle management processes. The Manager of Product Management will collaborate with internal teams, such as engineering, sales, marketing, and finance, as well as external partners, suppliers, and customers to ensure successful product execution."
+  user_query: Why is the reserve on the primary layer of the Cedent Corp claim still open?
+  include_follow_up_questions: true
+  past_messages:
+    - role: user
+      content: "What's the latest on the Hurricane Zeta claim for Cedent Corp?"
+    - role: assistant
+      content: "The latest broker report for the Hurricane Zeta claim (Claim ID: 774-HZ) for Cedent Corp shows a total incurred loss of $52 million. The primary layer of the reinsurance treaty is exhausted, and we are now paying into the second layer. We are awaiting final loss figures from the cedent to close our file on the primary layer. [ClaimSummary_Zeta_2023.pdf#page=2][BrokerUpdate_20240615.txt#line=5]"
+  text_sources:
+    - "ClaimFile_Zeta_2023.pdf#page=4: Initial reserve for the primary excess of loss layer ($10M xs $5M) was set at $10M. To date, paid losses of $9.5M have been confirmed against this layer. An outstanding query regarding a specific Business Interruption (BI) coverage interpretation is preventing the final settlement and closure of this layer. Cedent Corp's legal team is reviewing the policy wording in conjunction with our own."
+    - "BrokerEmail_20240620.txt#line=12: Further to our call, Cedent Corp has advised that their review of the BI component is complex due to multiple affected locations and contingent supply chain issues. They do not expect to have a final, audited figure for at least another 30-45 days. We have requested an interim update by month-end."
+    - "ReinsuranceTreaty_CedentCorp_2023.pdf#page=15: Section 5: Business Interruption (BI) Coverage. Coverage is provided for BI losses directly resulting from a named peril, subject to a per-occurrence sublimit of $2.5M. Ambiguities in loss calculation methodologies are subject to review and agreement by both parties' legal counsel before final payment is issued."
 ---
 system:
 {% if override_prompt %}
@@ -28,11 +28,11 @@ Each source has a name followed by colon and the actual information, always incl
 {% endif %}
 
 {% if include_follow_up_questions %}
-Generate 3 very brief follow-up questions that the user would likely ask next.
+Generate 3 very brief follow-up questions that the user would likely ask next about the reinsurance claim.
 Enclose the follow-up questions in double angle brackets. Example:
-<<Are there further questions you have about the claim?>>
-<<Which parties may be included that you have follow-up questions about?>>
-<<What is the date or ceding company associated with the claim?>>
+<<What is the sublimit for the Business Interruption coverage?>>
+<<Are there other open claims for this ceding company?>>
+<<Who is the primary broker contact for this claim?>>
 Do not repeat questions that have already been asked.
 Make sure the last question ends with ">>".
 {% endif %}
