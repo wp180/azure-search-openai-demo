@@ -36,12 +36,12 @@
     "chatEmptyStateTitle": "Chat with your Claims Data",
     "chatEmptyStateSubtitle": "Ask anything about your portfolio or try an example",
     "defaultExamples": {
-        "1": "What are the latest reserve recommendations for claim #AXA-2024-1138?",
-        "2": "Summarize all facultative policies in Poland exposed to the recent hailstorm event.",
-        "3": "Identify all casualty claims with an incurred value greater than $2M that have been open for more than 3 years.",
+        "1": "What is the sum of incurred losses for all property claims?",
+        "2": "Was there any claims in Leesburg? What about Connecticut? Give a JSON for any that fall in those locations.",
+        "3": "Generate an email calling for a review of all claims with an incurred value greater than $2M",
         "placeholder": "Type a new question (e.g. pull the loss history for Cedent XYZ Corp)"
     },
-    "askTitle": "Ask your Claims Data",
+    "askTitle": "Your AI Claims Assistant",
     "gpt4vExamples": {
         "1": "Based on the attached loss development triangle, what is the ultimate loss projection for accident year 2022?",
         "2": "Analyze the provided seismic map. Which of our insured locations fall within the highest-risk zones?",
